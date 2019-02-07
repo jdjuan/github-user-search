@@ -1,1 +1,1 @@
-<pre>{{searchResult | async | json }}</pre>
+<pre *ngFor="let searchResult of (searchResults|async)"> {{ searchResult | json }} </pre>
