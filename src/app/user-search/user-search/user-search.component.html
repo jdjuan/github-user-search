@@ -1,9 +1,16 @@
 <mat-form-field>
   <input matInput
-         placeholder="Search GitHub User:"
-         (keyup.enter)="searchUser($event.target.value)"
-         value="jdjuan" />
+         placeholder="Type something here:"
+         (keyup.enter)="searchUser(searchInput.value)"
+         value="Juan Herrera"
+         #searchInput />
 </mat-form-field>
+
+<button mat-raised-button
+        color="primary"
+        class="search-button"
+        (click)="searchUser(searchInput.value)">Search</button>
+
 <mat-spinner class="loading"
              *ngIf="loading"
              diameter="20"></mat-spinner><br />

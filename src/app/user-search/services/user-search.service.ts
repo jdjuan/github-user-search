@@ -2,12 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
-import { DetailedUser } from './models/user.model';
-import { UsersSearch } from './models/users-search.model';
+import { DetailedUser } from '../models/user.model';
+import { UsersSearch } from '../models/users-search.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class UserSearchService {
   searchUrl = 'https://api.github.com/search/users';
 
@@ -36,11 +34,11 @@ export class UserSearchService {
   errorHandler = (error: Error) => {
     console.error(error);
     return of(error);
-  }
+  };
 
   queryErrorHandler = (error: Error) => {
     alert('Ooops! Something went wrong 😢, blame @jdjuan');
     console.error(error);
     return of(error);
-  }
+  };
 }

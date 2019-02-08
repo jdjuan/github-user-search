@@ -2,7 +2,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { DetailedUser } from '../models/user.model';
-import { UserSearchService } from '../user-search.service';
+import { UserSearchService } from '../services/user-search.service';
 
 @Component({
   selector: 'app-user-search',
@@ -28,7 +28,7 @@ export class UserSearchComponent implements OnInit {
 
   constructor(private userSearchService: UserSearchService) {
     this.dataSource = new MatTableDataSource();
-    this.searchUser('jdjuan');
+    this.searchUser('Juan Herrera');
   }
 
   ngOnInit() {
@@ -47,6 +47,7 @@ export class UserSearchComponent implements OnInit {
           this.loading = false;
         },
         (error) => {
+          console.log(error);
           this.totalUsersFound = 0;
           this.loading = true;
         },
