@@ -1,9 +1,7 @@
-import {
-  HttpClientModule,
-  HTTP_INTERCEPTORS,
-} from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatInputModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -25,6 +23,7 @@ import { UserSearchComponent } from './user-search/user-search.component';
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatInputModule,
+    MatButtonModule,
   ],
   providers: [
     {

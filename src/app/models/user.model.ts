@@ -31,22 +31,3 @@ export interface DetailedUser {
   created_at: Date;
   updated_at: Date;
 }
-
-export interface User {
-  avatar_url: string;
-  login: string;
-  html_url: string;
-  company: string;
-  bio: string;
-  location: string;
-  followers: number;
-  //
-  following: number;
-  blog: string;
-  hireable: boolean;
-  created_at: Date;
-  public_repos: number;
-  public_gists: number;
-  subscriptions_url: string;
-  organizations_url: string;
-}

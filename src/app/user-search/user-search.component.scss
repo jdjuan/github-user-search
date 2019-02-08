@@ -1,5 +1,12 @@
 table {
   width: 100%;
+  td,
+  th {
+    width: 25%;
+  }
+  td {
+    cursor: pointer;
+  }
 }
 
 .mat-form-field {
@@ -7,23 +14,65 @@ table {
   width: 100%;
 }
 
-td,
-th {
-  width: 25%;
-}
-
 .avatar {
-  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.54);
   transition: 0.3s ease-in-out;
   border-radius: 50%;
   width: 2.5rem;
   margin: 5px;
   transform: scale(1);
+  position: static;
+  z-index: 1;
+  box-shadow: 1px 1px 5px 2px #c2c2c2;
   &:hover {
-    transform: scale(1.2);
+    box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.5);
+    transform: scale(2);
+    z-index: 100;
+    position: relative;
+    border-radius: 5%;
   }
 }
 
 .bio-data {
   font-size: 0.5rem;
+}
+
+// Expandable Row
+
+tr.example-detail-row {
+  height: 0;
+  background-color: aliceblue;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: #f5f5f5;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 200px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-description {
+  margin: 1rem;
+}
+
+.bold {
+  font-weight: bold;
 }

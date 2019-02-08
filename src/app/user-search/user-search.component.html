@@ -1,63 +1,82 @@
 <mat-form-field>
-  <input matInput
-         placeholder="Search GitHub User:"
-         (keyup.enter)="searchUser($event.target.value)"
-         value="jdjuan">
+  <input
+    matInput
+    placeholder="Search GitHub User:"
+    (keyup.enter)="searchUser($event.target.value)"
+    value="jdjuan"
+  />
 </mat-form-field>
-<mat-spinner class="loading"
-             *ngIf="loading"
-             diameter="20"></mat-spinner><br>
+<mat-spinner class="loading" *ngIf="loading" diameter="20"></mat-spinner><br />
 
 <div class="mat-elevation-z8">
-  <table mat-table
-         [dataSource]="dataSource"
-         matSort>
-
+  <table mat-table multiTemplateDataRows [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="avatar_url">
-      <th mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header> Photo </th>
-      <td mat-cell
-          *matCellDef="let row">
-        <a [href]="row.html_url"
-           target="_blank"><img [src]="row.avatar_url"
-               alt=""
-               class="avatar"></a>
-
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Photo</th>
+      <td mat-cell *matCellDef="let row">
+        <img [src]="row.avatar_url" alt="" class="avatar" />
       </td>
     </ng-container>
 
     <ng-container matColumnDef="login">
-      <th mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header> User </th>
-      <td mat-cell
-          *matCellDef="let row"> <a [href]="row.html_url"
-           target="_blank">{{row.login}}</a></td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>User</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.login }}
+      </td>
     </ng-container>
 
-    <ng-container matColumnDef="company">
-      <th mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header> Company </th>
-      <td mat-cell
-          *matCellDef="let row"> {{row.company}} </td>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.name }}
+      </td>
     </ng-container>
 
-    <ng-container matColumnDef="bio">
-      <th mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header> Bio </th>
-      <td mat-cell
-          *matCellDef="let row"
-          class="bio-data"> {{row.bio}} </td>
+    <ng-container matColumnDef="followers">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Followers</th>
+      <td mat-cell *matCellDef="let row">{{ row.followers }}</td>
     </ng-container>
 
-    <tr mat-header-row
-        *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row
-        *matRowDef="let row; columns: displayedColumns;">
-    </tr>
+    <ng-container matColumnDef="info">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>More Info</th>
+      <td mat-cell *matCellDef="let row" class="bio-data">
+        <button mat-raised-button color="accent">See More</button>
+      </td>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div
+          class="example-element-detail"
+          [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
+        >
+          <div class="example-element-diagram">
+            <div><span class="bold">Company:</span> {{ element.company }}</div>
+            <div><span class="bold">Location:</span> {{ element.location }}</div>
+            <div><span class="bold">Following:</span> {{ element.following }}</div>
+            <div><span class="bold">Hireable:</span> {{ element.hireable }}</div>
+            <div><span class="bold">Public Repos:</span> {{ element.public_repos }}</div>
+            <div>
+              <span class="bold">Member Since:</span> {{ element.created_at | date: 'yyyy' }}
+            </div>
+          </div>
+          <div class="example-element-description">
+            <h2>Description:</h2>
+            {{ element.bio }}
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let element; columns: displayedColumns"
+      class="example-element-row"
+      [class.example-expanded-row]="expandedElement === element"
+      (click)="expandedElement = expandedElement === element ? null : element"
+    ></tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
   </table>
 
   <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
