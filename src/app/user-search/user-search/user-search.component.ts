@@ -12,7 +12,7 @@ import { UserSearchService } from '../services/user-search.service';
     trigger('detailExpand', [
       state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),
       state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+      transition('expanded <=> collapsed', animate('425ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
 })
@@ -22,9 +22,9 @@ export class UserSearchComponent implements OnInit {
 
   displayedColumns: string[] = ['avatar_url', 'login', 'name', 'followers', 'info'];
   dataSource: MatTableDataSource<DetailedUser>;
-  loading: boolean;
-  totalUsersFound: number;
   expandedElement: DetailedUser | null;
+  totalUsersFound: number;
+  loading: boolean;
 
   constructor(private userSearchService: UserSearchService) {
     this.dataSource = new MatTableDataSource();
