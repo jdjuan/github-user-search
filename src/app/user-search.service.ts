@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, NEVER, Observable, of } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { DetailedUser } from './models/user.model';
 import { UsersSearch } from './models/users-search.model';
@@ -10,15 +10,13 @@ import { UsersSearch } from './models/users-search.model';
 })
 export class UserSearchService {
   searchUrl = 'https://api.github.com/search/users';
-  totalCount: number;
 
   constructor(private httpClient: HttpClient) {}
 
-  search(searchTerm: string): Observable<DetailedUser[]> {
+  search(searchTerm: string): Observable<DetailedUser[] | Error> {
     const queryUrl = `${this.searchUrl}?q=${searchTerm}`;
     return this.httpClient.get<UsersSearch>(queryUrl).pipe(
       switchMap((users: UsersSearch) => {
-        this.totalCount = users.total_count;
         if (users.items.length) {
           return forkJoin(
             users.items.map((user) => {
@@ -31,18 +29,18 @@ export class UserSearchService {
           return of([]);
         }
       }),
-      catchError(this.timeoutErrorHandler),
+      catchError(this.queryErrorHandler),
     );
   }
 
   errorHandler = (error: Error) => {
     console.error(error);
-    return NEVER;
+    return of(error);
   }
 
-  timeoutErrorHandler = (error: Error) => {
-    alert('Ooops! It seems like the search is taking longer than expected. We are trule sorry 😢');
+  queryErrorHandler = (error: Error) => {
+    alert('Ooops! Something went wrong 😢, blame @jdjuan');
     console.error(error);
-    return NEVER;
+    return of(error);
   }
 }

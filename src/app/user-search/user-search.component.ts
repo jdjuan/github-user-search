@@ -23,6 +23,7 @@ export class UserSearchComponent implements OnInit {
   displayedColumns: string[] = ['avatar_url', 'login', 'name', 'followers', 'info'];
   dataSource: MatTableDataSource<DetailedUser>;
   loading: boolean;
+  totalUsersFound: number;
   expandedElement: DetailedUser | null;
 
   constructor(private userSearchService: UserSearchService) {
@@ -36,11 +37,20 @@ export class UserSearchComponent implements OnInit {
   }
 
   searchUser(searchTerm: string) {
-    this.loading = true;
-    this.dataSource.data = [];
-    this.userSearchService.search(searchTerm).subscribe((data: DetailedUser[]) => {
-      this.dataSource.data = data;
-      this.loading = false;
-    });
+    if (searchTerm) {
+      this.loading = true;
+      this.dataSource.data = [];
+      this.userSearchService.search(searchTerm).subscribe(
+        (data: DetailedUser[]) => {
+          this.totalUsersFound = data.length;
+          this.dataSource.data = data;
+          this.loading = false;
+        },
+        (error) => {
+          this.totalUsersFound = 0;
+          this.loading = true;
+        },
+      );
+    }
   }
 }
