@@ -39,7 +39,7 @@
     <ng-container matColumnDef="info">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>More Info</th>
       <td mat-cell *matCellDef="let row" class="bio-data">
-        <button mat-raised-button color="accent">See More</button>
+        <button mat-raised-button color="primary">See More</button>
       </td>
     </ng-container>
 
@@ -51,18 +51,34 @@
           [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
         >
           <div class="example-element-diagram">
-            <div><span class="bold">Company:</span> {{ element.company }}</div>
-            <div><span class="bold">Location:</span> {{ element.location }}</div>
-            <div><span class="bold">Following:</span> {{ element.following }}</div>
-            <div><span class="bold">Hireable:</span> {{ element.hireable }}</div>
-            <div><span class="bold">Public Repos:</span> {{ element.public_repos }}</div>
+            <div *ngIf="element.company">
+              <span class="bold">Company:</span> {{ element.company }}
+            </div>
+            <div *ngIf="element.company">
+              <span class="bold">Location:</span> {{ element.location }}
+            </div>
+            <div *ngIf="element.following">
+              <span class="bold">Following:</span> {{ element.following }}
+            </div>
+            <div *ngIf="element.hireable">
+              <span class="bold">Hireable:</span> {{ element.hireable }}
+            </div>
+            <div *ngIf="element.public_repos">
+              <span class="bold">Public Repos:</span> {{ element.public_repos }}
+            </div>
             <div>
               <span class="bold">Member Since:</span> {{ element.created_at | date: 'yyyy' }}
             </div>
           </div>
           <div class="example-element-description">
             <h2>Description:</h2>
-            {{ element.bio }}
+            <span *ngIf="!element.bio; else bio">No description provided...</span>
+            <ng-template #bio>{{ element.bio }}</ng-template>
+            <br />
+            <br />
+            <a mat-raised-button [href]="element.html_url" color="accent" target="_blank"
+              >See Profile</a
+            >
           </div>
         </div>
       </td>
