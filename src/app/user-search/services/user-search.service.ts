@@ -20,7 +20,7 @@ export class UserSearchService {
             users.items.map((user) => {
               return this.httpClient
                 .get<DetailedUser>(user.url)
-                .pipe(catchError(this.errorHandler));
+                .pipe(catchError(this.userErrorHandler));
             }),
           );
         } else {
@@ -31,7 +31,7 @@ export class UserSearchService {
     );
   }
 
-  errorHandler = (error: Error) => {
+  userErrorHandler = (error: Error) => {
     console.error(error);
     return of(error);
   };
